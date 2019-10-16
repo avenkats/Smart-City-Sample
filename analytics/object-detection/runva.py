@@ -33,6 +33,12 @@ class RunVA(object):
                 "uri": uri,
                 "type":"uri"
             },
+            "destination": {
+                "type": "mqtt",
+                "host": mqtthost,
+                "clientid": algorithm,
+                "topic": topic
+            }
             "tags": {
                 "sensor": sensor,
                 "location": location,
@@ -44,11 +50,7 @@ class RunVA(object):
             },
             "parameters": {
                 "every-nth-frame": every_nth_frame,
-                "recording_prefix": "recordings/" + sensor,
-                "method": "mqtt",
-                "address": mqtthost,
-                "clientid": algorithm,
-                "topic": topic,
+                "recording_prefix": "recordings/" + sensor
             },
         }
 

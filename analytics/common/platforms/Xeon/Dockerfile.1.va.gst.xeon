@@ -42,26 +42,28 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get update && apt-get install -y -q --no-
     rm -rf /var/lib/apt/lists/*;
 
 COPY --from=gst-python-build /home/build_gst_python /
-COPY ./app/server/requirements.txt /
+
+RUN apt-get update \
+    && apt-get install --no-install-recommends -y git
+
+ARG VA_SERVING_REPO=https://github.com/intel/video-analytics-serving.git
+ARG VA_SERVING_VER=v0.2.0-alpha 
+RUN git clone ${VA_SERVING_REPO} \
+    && cd video-analytics-serving \
+    && git checkout ${VA_SERVING_VER} \
+    && cp service/app/server/requirements.txt /requirements.txt \
+    && mkdir /home/video-analytics \
+    && mv service/app /home/video-analytics/app \
+    && cd .. \
+    && rm -rf video-analytics-serving
+
 RUN pip3 install  --no-cache-dir -r /requirements.txt
 
-COPY ./app /home/video-analytics/app
-
 COPY ./platforms/Xeon/pipelines/gstreamer /home/video-analytics/pipelines
-
-
-
-
-
-
-
 
 ####
 ARG  USER
 ARG  GROUP
 ARG  UID
 ARG  GID
-
-
-
 ####
