@@ -2,9 +2,8 @@
     "name": "object_detection",
     "version": 1,
     "type": "GStreamer",
-    "template":"urisourcebin uri=\"{source[uri]}\" ! concat name=c ! decodebin ! video/x-raw ! videoconvert name=\"videoconvert\" ! gvadetect model=\"{models[object_detection][1][network]}\" model-proc=\"{models[object_detection][1][proc]}\" name=\"detection\" ! gvametaconvert converter=json method=detection source=\"{source[uri]}\" name=\"jsonmetaconvert\" ! queue ! appsink name=appsink",
+	"template":"urisourcebin name=\"source\" ! concat name=c ! decodebin ! video/x-raw ! videoconvert name=\"videoconvert\" ! gvadetect model=\"{models[object_detection][1][network]}\" model-proc=\"{models[object_detection][1][proc]}\" name=\"detection\" ! gvametaconvert converter=json method=detection name=\"metaconvert\" ! queue ! appsink name=appsink",
     "description": "Object Detection Pipeline",
-
     "parameters": {
 		"type" : "object",
 		"properties" : {
